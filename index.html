@@ -3,46 +3,85 @@
 <head>
   <meta charset="utf-8">
   <title>Chicago City-Owned LandInventory</title>
-  <link rel="manifest" href="/manifest.json">
+  <!--<link rel="manifest" href="/manifest.json"> -->
     
     
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" type="text/css" href="styles/inline.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  
    
   <style>
-      #topnav {background-color: red; padding: 20px;}
-      #contemy {font-size: 8em;}
+      #topnav {background-color: black; padding: 10px;}
+      #contemy {font-size: 2em;}
+      .screen {display: none;}
     </style>  
     
 </head>
 
 <body>
-  <div id="topvav">
-      <a data-screen1="homeIns">Home/Instructions</a>
-      <a data-screen2="form">Form</a>
-      <a data-screen3="data">Data</a>
-      <a data-screen4="map">Map</a>
-      <a data-screen5="about">About</a>
+  <div id="topnav">
+      <a data-screen="homeIns">Home/Instructions</a> |
+      <a data-screen="form">Form</a> |
+      <a data-screen="data">Data</a> |
+      <a data-screen="map">Map</a> |
+      <a data-screen="about">About</a>
     </div>
     
     <div id="content">
-        <div id="homeIns">
+        <div class="screen" id="homeIns">
             Home page content and instructions.
         </div>
-        <div id="form">
+        <div class="screen" id="form">
             A form to allow users to filter data
         </div>
-        <div id="data">
+        <div class="screen" id="data">
             the data in a listing form, using cars or some ordering list. 
         </div>
-        <div id="map">
+        <div class="screen" id="map">
             The data mapped, with markers and info windows.  The info window content should be the same as above
         </div>
-        <div id="about">
+        <div class="screen" id="about">
             Information about the app, including your name
         </div>
     </div>
+    
+    
+    <script>
+        
+        // want to show home page when loading page
+        // document.querySelector("homeIns").style.display= "block";
+        
+        let navAnchors = document.querySelectorAll("div#topnav a")
+        
+        navAnchors.forEach ( (anchor) => {
+            anchor.addEventListener("click", (event) => {
+                // hide all screens at first
+                document.querySelectorAll(".screen").forEach((screen) => {
+                    screen.style.display = "none";
+                })
+                
+                // read data-screen attribute
+                let screen = event.target.getAttribute("data-screen");
+                
+                // find relevant screen
+                let targetScreen = document.querySelector("#" + screen);
+                
+                // show it
+                targetScreen.style.display = "block";
+            })
+        })
+    
+    
+    </script>
+    
+  <!--  
   <script>
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js').then(function(registration) {
@@ -54,5 +93,7 @@
     });
   }
   </script>
+    -->
+   
 </body>
 </html>
