@@ -1,99 +1,67 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <meta charset="utf-8">
-  <title>Chicago City-Owned LandInventory</title>
-  <!--<link rel="manifest" href="/manifest.json"> -->
-    
-    
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <meta charset="utf-8">
+    <title>Chicago City-Owned Land Inventory</title>
+    <!--<link rel="manifest" href="/manifest.json"> -->
 
-  <!-- jQuery library -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-  <!-- Latest compiled JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  
-   
-  <style>
-      #topnav {background-color: black; padding: 10px;}
-      #contemy {font-size: 2em;}
-      .screen {display: none;}
-    </style>  
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+    <link rel="stylesheet" href="style.css">
+
     
+
 </head>
 
 <body>
-  <div id="topnav">
-      <a data-screen="homeIns">Home/Instructions</a> |
-      <a data-screen="form">Form</a> |
-      <a data-screen="data">Data</a> |
-      <a data-screen="map">Map</a> |
-      <a data-screen="about">About</a>
+
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand">City-Owned Land Invetory</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home/Instructions</a>
+                </li>
+                <li><a href="#">Form</a>
+                </li>
+                <li><a href="#">Data</a>
+                </li>
+                <li><a href="#">Map</a>
+                </li>
+                <li><a href="#">About</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <div class="container">
+        <h1>Home Page describing web and instructions on how to use</h1>
+        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+            when an unknown printer took a galley of type and scrambled it to make a 
+            type specimen book. It has survived not only five centuries, but also the 
+            leap into electronic typesetting, remaining essentially unchanged. It was 
+            popularised in the 1960s with the release of Letraset sheets containing 
+            Lorem Ipsum passages, and more recently with desktop publishing software 
+            like Aldus PageMaker including versions of Lorem Ipsum.
+        </p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/0f/2010-02-19_3000x2000_chicago_skyline.jpg" alt="chicago skyline" class="center">
+
     </div>
-    
-    <div id="content">
-        <div class="screen" id="homeIns">
-            Home page content and instructions.
-        </div>
-        <div class="screen" id="form">
-            A form to allow users to filter data
-        </div>
-        <div class="screen" id="data">
-            the data in a listing form, using cars or some ordering list. 
-        </div>
-        <div class="screen" id="map">
-            The data mapped, with markers and info windows.  The info window content should be the same as above
-        </div>
-        <div class="screen" id="about">
-            Information about the app, including your name
-        </div>
-    </div>
-    
-    
-    <script>
-        
-        // want to show home page when loading page
-        // document.querySelector("homeIns").style.display= "block";
-        
-        let navAnchors = document.querySelectorAll("div#topnav a")
-        
-        navAnchors.forEach ( (anchor) => {
-            anchor.addEventListener("click", (event) => {
-                // hide all screens at first
-                document.querySelectorAll(".screen").forEach((screen) => {
-                    screen.style.display = "none";
-                })
-                
-                // read data-screen attribute
-                let screen = event.target.getAttribute("data-screen");
-                
-                // find relevant screen
-                let targetScreen = document.querySelector("#" + screen);
-                
-                // show it
-                targetScreen.style.display = "block";
-            })
-        })
-    
-    
-    </script>
-    
-  <!--  
-  <script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js').then(function(registration) {
-      // Registration was successful
-      console.log('ServiceWorker registration successful with scope: ', registration.scope);
-    }).catch(function(err) {
-      // registration failed :(
-      console.log('ServiceWorker registration failed: ', err);
-    });
-  }
-  </script>
-    -->
-   
+
 </body>
+
 </html>
