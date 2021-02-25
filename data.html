@@ -19,7 +19,7 @@
 
 
     <link rel="stylesheet" href="style.css">
-    
+
     <title>Data</title>
 
 
@@ -31,9 +31,9 @@
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">City-Owned Land Inventory</a>
+                <a class="navbar-brand">City-Owned Land Inventory</a>
             </div>
-            
+
             <ul class="nav navbar-nav">
                 <li><a href="index.html">Home/Instructions</a>
                 </li>
@@ -50,16 +50,40 @@
     </nav>
 
 
-
-
-
     <div class="container">
-        <h1>data page</h1>
-        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-        </p>
-      
-
+        <h1 style="text-align: center">data page </h1>
     </div>
+
+
+    <div class="container card" id="cards">
+        <div class="card-body">
+            <h class="card-title" id="cardTitle"></h>
+            <p class="card-text" id="cardText">Some example text. Some example text.</p>
+            <a href="#" class="card-link" id="firstLink">Card link</a>
+            <a href="#" class="card-link" id="secondLink">Another link</a>
+        </div>
+    </div>
+
+
+    <script>
+        let endpoint = "https://data.cityofchicago.org/resource/aksk-kvfp.json";
+        
+        fetch(endpoint)
+        .then((response) => { return response.json()})
+        .then((data) => {
+            
+            for (let item of data) {
+                let p = document.createElement("p")
+                p.innerText = "Community Name: " + item["community_area_name"] + " Pin: " + item["pin"];
+                document.querySelector("#cardTitle").append(p);
+            }
+        })
+        
+    </script>
+
+
+
+
 
 </body>
 

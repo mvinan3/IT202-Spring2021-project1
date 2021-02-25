@@ -31,7 +31,7 @@
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">City-Owned Land Inventory</a>
+                <a class="navbar-brand">City-Owned Land Inventory</a>
             </div>
 
             <ul class="nav navbar-nav">
@@ -71,6 +71,10 @@
         </div>
 
     </div>
+    
+    <div class="container" id="results">
+        
+    </div>
 
     <script>
         
@@ -83,11 +87,15 @@
             // construct url
             let url = endpoint + "?zip_code=" + zip;
             
+            document.querySelector("#results").innerText= "";
+            
             // fetch
             fetch(url)
             .then((response) => {return response.json()})
             .then((data) => {
                 
+                document.querySelector("#results").innerText="Results Found: " + data.length;
+                    
                 for (let item of data) {
                     // create a paragraph
                     let p = document.createElement("p")
@@ -96,7 +104,7 @@
                     p.innerText = "Address: " + item["address"] + " ID: " + item["id"];
                     
                     // append to the body
-                    document.body.append(p);
+                    document.querySelector("#results").append(p);
                 }
             
             })
