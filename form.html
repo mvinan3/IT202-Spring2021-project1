@@ -19,10 +19,10 @@
 
 
     <link rel="stylesheet" href="style.css">
-    
+
     <title>form</title>
 
-    
+
 
 </head>
 
@@ -33,7 +33,7 @@
             <div class="navbar-header">
                 <a class="navbar-brand" href="#">City-Owned Land Inventory</a>
             </div>
-            
+
             <ul class="nav navbar-nav">
                 <li><a href="index.html">Home/Instructions</a>
                 </li>
@@ -48,27 +48,68 @@
             </ul>
         </div>
     </nav>
-    
-    
-    
-    
-    
 
+
+    <div class="container header">
+        <h1>Data Filter</h1>
+        <p>Enter any zip code to filter data by: </p>
+    </div>
 
     <div class="container">
-        <h1>Should be my form page, so lets see what happens</h1>
-        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-            when an unknown printer took a galley of type and scrambled it to make a 
-            type specimen book. It has survived not only five centuries, but also the 
-            leap into electronic typesetting, remaining essentially unchanged. It was 
-            popularised in the 1960s with the release of Letraset sheets containing 
-            Lorem Ipsum passages, and more recently with desktop publishing software 
-            like Aldus PageMaker including versions of Lorem Ipsum.
-        </p>
-        
+        <form id="data">
+            <input type="number" name="zip codes" id="zip"> 
+
+            
+      
+
+        </form>
+
+        <button id="search">Search</button>
+
+        <div id="results">
+
+        </div>
 
     </div>
+
+    <script>
+        
+        let endpoint = "https://data.cityofchicago.org/resource/aksk-kvfp.json";
+        
+        document.querySelector("#search").addEventListener("click", (e) => {
+            // read the value of the input box
+            let zip = document.querySelector("#zip").value;
+            
+            // construct url
+            let url = endpoint + "?zip_code=" + zip;
+            
+            // fetch
+            fetch(url)
+            .then((response) => {return response.json()})
+            .then((data) => {
+                
+                for (let item of data) {
+                    // create a paragraph
+                    let p = document.createElement("p")
+                    
+                    // set the value
+                    p.innerText = "Address: " + item["address"] + " ID: " + item["id"];
+                    
+                    // append to the body
+                    document.body.append(p);
+                }
+            
+            })
+               
+                
+        });
+        
+        
+        
+        
+    </script>
+
+
 
 </body>
 
