@@ -5,6 +5,10 @@
   width: 50%;
 }
 
+.screen {
+    display: none;
+}
+
 body {background-color: lightgoldenrodyellow;}
 
 

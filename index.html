@@ -34,32 +34,180 @@
                 <a class="navbar-brand">City-Owned Land Inventory</a>
             </div>
 
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="index.html">Home/Instructions</a>
+            <ul class="nav navbar-nav" id="topNav">
+                <li>
+                    <a data-screen="home">Home/Instructions</a>
                 </li>
-                <li><a href="form.html">Form</a>
+                <li>
+                    <a data-screen="form">Form</a>
                 </li>
-                <li><a href="data.html">Data</a>
+                <li>
+                    <a data-screen="datapg">Data</a>
                 </li>
-                <li><a href="maps.html">Maps</a>
+                <li>
+                    <a data-screen="maps">Maps</a>
                 </li>
-                <li><a href="about.html">About</a>
+                <li>
+                    <a data-screen="about">About</a>
                 </li>
             </ul>
         </div>
     </nav>
 
+    <div id="content">
+        
+        <!--------- Home Page ---------->
+        
+        <div class="screen" id="home">
+            <div class="container">
+                <h1 style="text-align: center">Home Page describing web and instructions on how to use</h1>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                </p>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/0f/2010-02-19_3000x2000_chicago_skyline.jpg" alt="chicago-skyline" class="center">
+
+            </div>
+        </div>
+        
+        <!---------------- FORM PAGE ------------->
+        
+        <div class="screen" id="form">
+            <div class="container header">
+                <h1>Data Filter</h1>
+                <p>Enter any zip code to filter data by:</p>
+            </div>
+
+            <div class="container">
+                <form id="data">
+                    <input type="number" name="zip codes" id="zip">
 
 
 
 
-    <div class="container">
-        <h1 style="text-align: center">Home Page describing web and instructions on how to use</h1>
-        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-        </p>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/0/0f/2010-02-19_3000x2000_chicago_skyline.jpg" alt="chicago-skyline" class="center">
+                </form>
+
+                <button id="search">Search</button>
+
+                <div id="results">
+
+                </div></div>
+
+            <div class="container" id="results"> </div>
+
+        </div>
+        
+        <!---------------- DATA PAGE ---------------->
+
+        <div class="screen" id="datapg">
+            <div class="container">
+                <h1 style="text-align: center">data page </h1>
+            </div>
+
+            <div class="container card" id="cards">
+                <div class="card-body">
+                    <h class="card-title" id="cardTitle"></h>
+                    <p class="card-text" id="cardText">Some example text. Some example text.</p>
+                    <a href="#" class="card-link" id="firstLink">Card link</a>
+                    <a href="#" class="card-link" id="secondLink">Another link</a>
+                </div>
+            </div>
+        </div> 
+        
+        <!-----------------MAPS PAGE ----------->
+
+        <div class="screen" id="maps">
+            <h1>maps</h1>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            </p>
+        </div>
+        
+        <!---------------ABOUT PAGE ------------------>
+
+        <div class="screen" id="about">
+            <h1>About page</h1>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            </p>
+        </div>
 
     </div>
+    
+    <!---------------Controls navbar buttons --------------->
+
+    <script>
+        let navAnchors = document.querySelectorAll("ul li a");
+        navAnchors.forEach((anchor) => {
+            anchor.addEventListener("click", (event) => {
+                // hide all screens first
+                document.querySelectorAll(".screen").forEach((screen) => {
+                    screen.style.display = "none";
+                })
+                // read data screen attribute
+                let screen = event.target.getAttribute("data-screen");
+                // find relevant screen
+                let targetScreen = document.querySelector("#" + screen);
+                // show it
+                targetScreen.style.display = "block"
+            })
+        })
+    </script>
+    
+    <!--------------- Filters data from api by zip code -------------->
+    
+    <script>
+        let endpoint1 = "https://data.cityofchicago.org/resource/aksk-kvfp.json";
+        
+        document.querySelector("#search").addEventListener("click", (e) => {
+            // read the value of the input box
+            let zip = document.querySelector("#zip").value;
+            
+            // construct url
+            let url = endpoint1 + "?zip_code=" + zip;
+            
+            document.querySelector("#results").innerText= "";
+            
+            // fetch
+            fetch(url)
+            .then((response) => {return response.json()})
+            .then((data) => {
+                
+                document.querySelector("#results").innerText="Results Found: " + data.length;
+                    
+                for (let item of data) {
+                    // create a paragraph
+                    let p = document.createElement("p")
+                    
+                    // set the value
+                    p.innerText = "Address: " + item["address"] + " ID: " + item["id"];
+                    
+                    // append to the body
+                    document.querySelector("#results").append(p);
+                }
+            
+            })
+               
+                
+        });
+    </script>
+    
+    <!-------- Controls data page, creates cards and populates --------------------->
+    
+    <script>
+        let endpoint2 = "https://data.cityofchicago.org/resource/aksk-kvfp.json";
+        
+        fetch(endpoint2)
+        .then((response) => { return response.json()})
+        .then((data) => {
+            
+            for (let item of data) {
+                let p = document.createElement("p")
+                p.innerText = "Community Name: " + item["community_area_name"] + " Pin: " + item["pin"];
+                document.querySelector("#cardTitle").append(p);
+            }
+        })
+        
+    </script>
+    
+    
+
 
 </body>
 
