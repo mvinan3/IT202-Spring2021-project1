@@ -22,16 +22,19 @@
 
     <title>Project 1</title>
     
-    <style>
-      #maps {
-        height: 100%;
-      }
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-    </style>
+    <style type="text/css">
+              /* Set the size of the div element that contains the map */
+              #map {
+                height: 400px;
+                /* The height is 400 pixels */
+                width: 100%;
+                /* The width is the width of the web page */
+        }
+        
+        
+      </style>
+    
+    
 
 
 
@@ -51,7 +54,7 @@
                     <a data-screen="home">Home</a>
                 </li>
                 <li>
-                    <a data-screen="form">Form</a>
+                    <a data-screen="form">Search</a>
                 </li>
                 <li>
                     <a data-screen="datapg">Data</a>
@@ -72,9 +75,11 @@
         
         <div class="screen" id="home">
             <div class="container">
-                <h1 style="text-align: center">Home Page describing web and instructions on how to use</h1>
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                <h1 style="text-align: center">Chicago City Owned Land Inventory</h1>
+                <center>
+                <p>To use this app properly, first go to the search page. In there you can search by entering the zip code of the area you would want to see. Then it'll display a list of the invetory the city owns. Furthermore you can go to the data page and look through all the inventory. Lastly you can access the maps page for the location of said properties.  
                 </p>
+                </center>
                 <img src="https://upload.wikimedia.org/wikipedia/commons/0/0f/2010-02-19_3000x2000_chicago_skyline.jpg" alt="chicago-skyline" class="center">
 
             </div>
@@ -118,12 +123,6 @@
           <div class="alert alert-primary" role="alert">
             New Search Results Appear Below Go Check Them Out!!!
           </div>
-                <form id="datas">
-                    <select name="department" id="department">
-                        <option></option>
-                    </select>
-                    
-                </form>
         </center>
          <div class="container">
 
@@ -131,9 +130,8 @@
                 <div class="card template" id="card-temp">
                   <div class="card-body">
                     <h5 class="card-title">Card title</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                    <p class="card-text">first teext of card</p>
-                    <p2 class="card-text2">second text or card.</p2>
+                    <!--<p class="card-text">first teext of card</p>-->
+                    <p2 class="card-text2">text or card.</p2>
               </div> 
             </div>
           </div>
@@ -172,9 +170,10 @@
         <!---------------ABOUT PAGE ------------------>
 
         <div class="screen" id="about">
-            <h1>About page</h1>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-            </p>
+            <center>
+            <h1>Well you've made it to the last screen, sorry to dissapoint but there isnt much here :/</h1>
+                <p>This project was made by Marco Vinansaca.</p>
+            </center>
         </div>
 
     </div>
@@ -254,27 +253,47 @@
         
         
         
+        
+        
         fetch(url)
             .then((response) => {return response.json()})
             .then((data) => {
                 for (let item of data){
                     let clone = cd.cloneNode(true);
-                    let c = "Community Name: " + item["community_area_name"];
-                    let pn = "Pin: " + item["pin"];
-                    let p = "Property Address: " + item["address"] + ", Square-footage: " + item["sq_ft"];
+                    let c = "Community Name: " + item["community_area_name"] + ", Pin: " + item["pin"];
+                    let pa = "Property Address: " + item["address"] + ", Square-footage: " + item["sq_ft"];
                     clone.querySelector("h5").innerText = c;
-                    clone.querySelector("h6").innexText = pn;
-                    clone.querySelector("p").innerText = p;
+                    //clone.querySelector("p").innexText = pn;
+                    clone.querySelector("p2").innerText = pa;
+                    //clone.classList.remove("card template");
                     cd.parentElement.append(clone);
                 }
             })
         
     </script>
     
-    <!-- For maps page
-    <script src="https://maps.googleapis.com/maps/api/jskey=AIzaSyCNwOMzHC_K1xdHdelrYsRcVRCgYRm2MRI&callback=initMap&libraries=&v=weekly" async></script>
+    <!-- For maps page -->
+    <script     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNwOMzHC_K1xdHdelrYsRcVRCgYRm2MRI&callback=initMap&libraries=&v=weekly" async></script>
     
-    --->
+    
+    <!-- This is the service worker part --->
+    
+     <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('./sw.js').then(function(registration) {
+            // Registration was successful
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+          }, function(err) {
+            // registration failed :(
+            console.log('ServiceWorker registration failed: ', err);
+          });
+        });
+      }
+    </script>
+    
+    
+    
    
 
     
