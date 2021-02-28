@@ -9,6 +9,8 @@
     display: none;
 }
 
+
+
 body {background-color: lightgoldenrodyellow;}
 
 
@@ -25,5 +27,5 @@ body {background-color: lightgoldenrodyellow;}
 
 /* Add some padding inside the card container */
 .container {
-  padding: 2px 16px;
+  padding: 4px 32px;
 }

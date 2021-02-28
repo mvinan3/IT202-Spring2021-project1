@@ -21,6 +21,18 @@
     <link rel="stylesheet" href="style.css">
 
     <title>Project 1</title>
+    
+    <style>
+      #maps {
+        height: 100%;
+      }
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+
 
 
 
@@ -71,6 +83,7 @@
         <!---------------- FORM PAGE ------------->
         
         <div class="screen" id="form">
+            <center>
             <div class="container header">
                 <h1>Data Filter</h1>
                 <p>Enter any zip code to filter data by:</p>
@@ -85,39 +98,75 @@
 
                 </form>
 
-                <button id="search">Search</button>
+                    <button id="search">Search</button>
 
-                <div id="results">
+                    <div id="results">
 
-                </div></div>
+                    </div>
+                </div>
 
             <div class="container" id="results"> </div>
-
+            </center>
         </div>
         
         <!---------------- DATA PAGE ---------------->
 
         <div class="screen" id="datapg">
-            <div class="container">
-                <h1 style="text-align: center">data page </h1>
-            </div>
+            
+            <center>
+        <h1>Results page</h1>
+          <div class="alert alert-primary" role="alert">
+            New Search Results Appear Below Go Check Them Out!!!
+          </div>
+                <form id="datas">
+                    <select name="department" id="department">
+                        <option></option>
+                    </select>
+                    
+                </form>
+        </center>
+         <div class="container">
 
-            <div class="container card" id="cards">
-                <div class="card-body">
-                    <h class="card-title" id="cardTitle"></h>
-                    <p class="card-text" id="cardText">Some example text. Some example text.</p>
-                    <a href="#" class="card-link" id="firstLink">Card link</a>
-                    <a href="#" class="card-link" id="secondLink">Another link</a>
-                </div>
+              <div class="row">
+                <div class="card template" id="card-temp">
+                  <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                    <p class="card-text">first teext of card</p>
+                    <p2 class="card-text2">second text or card.</p2>
+              </div> 
             </div>
+          </div>
+        </div>
         </div> 
         
         <!-----------------MAPS PAGE ----------->
 
         <div class="screen" id="maps">
-            <h1>maps</h1>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-            </p>
+            <center>
+            <h1>Maps</h1>
+                <script> // Move it to the top, before the closing body tag
+                    // Initialize and add the map
+                    let map;//creating a variable (global)
+                    function initMap() {
+                      // The location of Uluru
+                      const chicago = { lat: 41.8696, lng: -87.6496 };
+                      // The map, centered at Uluru
+                      map = new google.maps.Map(document.getElementById("map"), {
+                        zoom: 4,
+                        center: chicago,
+                      });
+                      // The marker, positioned at Uluru
+                      const marker = new google.maps.Marker({
+                        position: chicago,
+                        map: map,
+                      });
+                    }
+                </script>
+                  <h3>Google map pointing to UIC</h3>
+                    <!--The div element for the map -->
+                    <div id="map"></div>
+            </center>
         </div>
         
         <!---------------ABOUT PAGE ------------------>
@@ -133,6 +182,11 @@
     <!---------------Controls navbar buttons --------------->
 
     <script>
+        // when page first loads we show the home screen
+        
+        document.querySelector("#home").style.display= "block";
+        
+       
         let navAnchors = document.querySelectorAll("ul li a");
         navAnchors.forEach((anchor) => {
             anchor.addEventListener("click", (event) => {
@@ -176,7 +230,7 @@
                     let p = document.createElement("p")
                     
                     // set the value
-                    p.innerText = "Address: " + item["address"] + " ID: " + item["id"];
+                    p.innerText = "Address: " + item["address"] + ", ID: " + item["id"];
                     
                     // append to the body
                     document.querySelector("#results").append(p);
@@ -186,26 +240,43 @@
                
                 
         });
+        
+        
     </script>
     
     <!-------- Controls data page, creates cards and populates --------------------->
     
     <script>
-        let endpoint2 = "https://data.cityofchicago.org/resource/aksk-kvfp.json";
         
-        fetch(endpoint2)
-        .then((response) => { return response.json()})
-        .then((data) => {
-            
-            for (let item of data) {
-                let p = document.createElement("p")
-                p.innerText = "Community Name: " + item["community_area_name"] + " Pin: " + item["pin"];
-                document.querySelector("#cardTitle").append(p);
-            }
-        })
+        let url = "https://data.cityofchicago.org/resource/aksk-kvfp.json";
+        
+        let cd = document.querySelector("#card-temp");
+        
+        
+        
+        fetch(url)
+            .then((response) => {return response.json()})
+            .then((data) => {
+                for (let item of data){
+                    let clone = cd.cloneNode(true);
+                    let c = "Community Name: " + item["community_area_name"];
+                    let pn = "Pin: " + item["pin"];
+                    let p = "Property Address: " + item["address"] + ", Square-footage: " + item["sq_ft"];
+                    clone.querySelector("h5").innerText = c;
+                    clone.querySelector("h6").innexText = pn;
+                    clone.querySelector("p").innerText = p;
+                    cd.parentElement.append(clone);
+                }
+            })
         
     </script>
     
+    <!-- For maps page
+    <script src="https://maps.googleapis.com/maps/api/jskey=AIzaSyCNwOMzHC_K1xdHdelrYsRcVRCgYRm2MRI&callback=initMap&libraries=&v=weekly" async></script>
+    
+    --->
+   
+
     
 
 
